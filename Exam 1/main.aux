@@ -1,0 +1,28 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {3}In a multiclass classification problem with $s$ clases one has data of the form $(a,l) \in \mathbb  {R}^n \times \{ 1, \ldots  , s \}$, and one wants to find a linear classifier for each class, that is, one wants to find $x_l \in \mathbb  {R}^n$ that minimizes the loss function $$ g(x_1, \ldots  , x_s; a, l) = \max _{m \neq l} [ 1 + \langle a, x_m - x_l \rangle ]_+$$ where $[t]_+ = \max \{ 0, t \}$. Note that given $(a,l)$, it is true that $g=0$ if and only if the classifiers of each class have a big margin, that is, for each $m \neq l$ one has that $$ \langle a, x_l \rangle \geq \langle a, x_m \rangle + 1.$$ Given a dataset $\{ (a_i, l_i) \}_{i=1}^N$ one wants to solve the problem $$\min \cfrac  {1}{N} \DOTSB \tsum \slimits@ _{i=1}^N g(x_1, \ldots  , x_s; a_i, l_i) $$ $$\text  { subject to } \|x_j\|_2 \leq r, j=1, \ldots  , s.$$ Consider the database of handwritten digits (train.csv), in this case $n=784$ and $s=10$. From the more than $4000$ data for each digit, choose $N>5000$ and take $r=3$ to solve the problem with each of the following methods:}{1}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Solution:}{2}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Solution:}{2}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Solution:}{3}{section*.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Objective function value vs Iterations}}{4}{figure.1}\protected@file@percent }
+\newlabel{fig:1}{{1}{4}{Objective function value vs Iterations}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Projected subgradient vs Iterations}}{4}{figure.2}\protected@file@percent }
+\newlabel{fig:2}{{2}{4}{Projected subgradient vs Iterations}{figure.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Polyak vs Iterations}}{4}{figure.3}\protected@file@percent }
+\newlabel{fig:3}{{3}{4}{Polyak vs Iterations}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Stochastic subgradient vs Iterations}}{4}{figure.4}\protected@file@percent }
+\newlabel{fig:4}{{4}{4}{Stochastic subgradient vs Iterations}{figure.4}{}}
+\gdef \@abspage@last{4}

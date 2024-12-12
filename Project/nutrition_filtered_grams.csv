@@ -1,0 +1,76 @@
+name,calories,protein,total_fat,saturated_fat,carbohydrate,fiber,sugars,sodium
+"Chicken breast tenders, uncooked, breaded",263,14.73,16.0,3.3,15.01,1.1,0.37,0.536
+"Turkey breast, prepackaged, sliced",100,16.33,2.4,0.3,2.34,0.0,3.28,0.922
+"Fish, raw, wild, Atlantic, salmon",142,19.84,6.3,1.0,0.0,0.0,0.0,0.044
+"Fish, raw, yellowfin, fresh, tuna",109,24.4,0.5,0.2,0.0,0.0,0.0,0.045
+Eggs,155,13.1,5.6,1.1,7.5,0.0,7.5,0.162
+"Yogurt, nonfat, vanilla, Greek",78,8.64,0.2,0.1,10.37,0.5,9.54,0.034
+"Cheese, 2% milkfat, lowfat, cottage",81,10.45,2.3,1.2,4.76,0.0,4.0,0.308
+"Tofu, prepared with calcium sulfate, fried",270,18.82,20.0,2.9,8.86,3.9,0.0,0.016
+"Beef, raw, 95% lean meat / 5% fat, ground",137,21.41,5.0,2.2,0.0,0.0,0.0,0.066
+"Pork, raw or unheated, breakfast strips, cured",388,11.74,37.0,13.0,0.7,0.0,0.0,0.987
+"Crustaceans, cooked (not previously frozen), shrimp",99,23.98,0.3,0.1,0.2,0.0,0.0,0.0
+"Fish, drained solids with bone, canned in oil, Atlantic, sardine",208,24.62,11.0,1.5,0.0,0.0,0.0,0.307
+"Fish, raw, tilapia",96,20.08,1.7,0.6,0.0,0.0,0.0,0.052
+"Beans, home prepared, baked",155,5.54,5.2,1.9,21.63,5.5,0.0,0.422
+"Chickpeas (garbanzo beans, bengal gram), raw, mature seeds",378,20.47,6.0,0.6,62.95,12.2,10.7,0.024
+"Lentils, raw, sprouted",106,8.96,0.6,0.1,22.14,0.0,0.0,0.011
+"Edamame, unprepared, frozen",109,11.22,4.7,,7.61,4.8,2.48,0.006
+"Rice, unenriched, raw, short-grain, white",358,6.5,0.5,0.1,79.15,0.0,0.0,0.001
+"Quinoa, uncooked",368,14.12,6.1,0.7,64.16,7.0,0.0,0.005
+Oats,389,16.89,6.9,1.2,66.27,10.6,0.0,0.002
+"Sweet Potatoes, unprepared, frozen, crosscut, french fried",209,1.7,11.0,0.9,25.52,3.4,6.46,0.214
+"Bread, oat bran",236,10.4,4.4,0.7,39.8,4.5,7.7,0.353
+"Pasta, dry, remaining unenriched semolina, 51% whole wheat, whole grain",362,13.51,2.7,0.4,73.1,10.1,2.6,0.011
+Barley flour or meal,345,10.5,1.6,0.3,74.52,10.1,0.8,0.004
+"Corn, raw, white, sweet",86,3.22,1.2,0.2,19.02,2.7,3.22,0.015
+"Plantains, fried, green",309,1.5,12.0,3.7,49.17,3.5,3.63,0.002
+"Spinach, unprepared, chopped or leaf, frozen",29,3.63,0.6,,4.21,2.9,0.65,0.074
+"Kale, without salt, drained, boiled, cooked",28,1.9,0.4,0.1,5.63,2.0,1.25,0.023
+"Broccoli, without salt, drained, boiled, cooked",35,2.38,0.4,0.1,7.18,3.3,1.39,0.041
+"Cauliflower, with salt, drained, boiled, cooked",23,1.84,0.5,0.1,4.11,2.3,1.86,0.242
+"Carrots, without salt, drained, boiled, cooked",35,0.76,0.2,,8.22,3.0,3.45,0.058
+"Peppers, unprepared, chopped, frozen, red, sweet",20,1.08,0.2,,4.45,1.6,3.26,0.005
+"Mushrooms, grilled, portabella",29,3.28,0.6,0.1,4.44,2.2,2.26,0.011
+"Asparagus, with salt, drained, boiled, cooked",22,2.4,0.2,,4.11,2.0,1.3,0.24
+"Squash, unprepared, frozen, includes skin, zucchini, summer",17,1.16,0.1,,3.58,1.3,1.71,0.002
+"Cucumber, raw, peeled",12,0.59,0.2,,2.16,0.7,1.38,0.002
+"Tomatoes, raw, green",23,1.2,0.2,,5.1,1.1,4.0,0.013
+"Onions, raw, sweet",32,0.8,0.1,,7.55,0.9,5.02,0.008
+"Garlic, raw",149,6.36,0.5,0.1,33.06,2.1,1.0,0.017
+"Cabbage, salted, mustard",28,1.1,0.1,,5.63,3.1,1.4,0.717
+"Brussels sprouts, unprepared, frozen",41,3.78,0.4,0.1,7.86,3.8,0.0,0.01
+"Celery, with salt, drained, boiled, cooked",18,0.83,0.2,,4.0,1.6,2.37,0.327
+"Lettuce, raw, green leaf",15,1.36,0.2,,2.87,1.3,0.78,0.028
+"Apples, with skin, raw",52,0.26,0.2,,13.81,2.4,10.39,0.001
+"Bananas, raw",89,1.09,0.3,0.1,22.84,2.6,12.23,0.001
+"Mangos, raw",60,0.82,0.4,0.1,14.98,1.6,13.66,0.001
+"Avocados, California, raw",167,1.96,15.0,2.1,8.64,6.8,0.3,0.008
+"Oranges, with peel, raw",63,1.3,0.3,,15.5,4.5,0.0,0.002
+"Grapes, raw, american type (slip skin)",67,0.63,0.4,0.1,17.15,0.9,16.25,0.002
+"Watermelon, raw",30,0.61,0.2,,7.55,0.4,6.2,0.001
+"Pineapple, all varieties, raw",50,0.54,0.1,,13.12,1.4,9.85,0.001
+"Kiwifruit, raw, ZESPRI SunGold",63,1.02,0.3,0.1,15.79,1.4,12.3,0.003
+"Papayas, raw",43,0.47,0.3,0.1,10.82,1.7,7.82,0.008
+"Peaches, raw, yellow",39,0.91,0.3,,9.54,1.5,8.39,0.0
+"Cherries, raw, red, sour",50,1.0,0.3,0.1,12.18,1.6,8.49,0.003
+"Lemons, without peel, raw",29,1.1,0.3,,9.32,2.8,2.5,0.002
+"Limes, raw",30,0.7,0.2,,10.54,2.8,1.69,0.002
+"Grapefruit, California, white, raw",37,0.88,0.1,,9.09,0.0,0.0,0.0
+"Pomegranates, raw",83,1.67,1.2,0.1,18.7,4.0,13.67,0.003
+"Pears, raw, asian",42,0.5,0.2,,10.65,3.6,7.05,0.0
+"Dates, medjool",277,1.81,0.2,,74.97,6.7,66.47,0.001
+"Oil, salad or cooking, olive",884,0.0,100.0,14.0,0.0,0.0,0.0,0.002
+"Ice creams, light, chocolate",187,5.0,7.2,4.4,25.7,0.8,24.71,0.071
+"Oil, roasting nuts, oil sprays, principal uses candy coatings, coconut, industrial",884,0.0,100.0,86.0,0.0,0.0,0.0,0.0
+"Nuts, almonds",579,21.15,50.0,3.8,21.55,12.5,4.35,0.001
+"Oil, walnut",884,0.0,100.0,9.1,0.0,0.0,0.0,0.0
+"Peanuts, with salt, oil-roasted, all types",599,28.03,53.0,8.7,15.26,9.4,4.18,0.32
+"Seeds, dried, chia seeds",486,16.54,31.0,3.3,42.12,34.4,0.0,0.016
+"Peanut butter, reduced fat, smooth",520,25.9,34.0,5.8,35.65,5.2,9.28,0.54
+"Soymilk (All flavors), enhanced",45,2.94,2.0,0.2,3.45,0.4,2.53,0.05
+"Beverages, ready-to-drink, chocolate, almond milk",50,0.63,1.3,,9.38,0.4,8.75,0.071
+"Milk, without added vitamin A and vitamin D, 1% fat, fluid",42,3.37,1.0,0.6,4.99,0.0,5.2,0.044
+"Strawberries, raw",32,0.67,0.3,,7.68,2.0,4.89,0.001
+"Blueberries, raw",57,0.74,0.3,,14.49,2.4,9.96,0.001
+"Raspberries, unsweetened, frozen",52,1.2,0.7,,11.94,6.5,4.42,0.001

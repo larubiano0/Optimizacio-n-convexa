@@ -1,0 +1,721 @@
+
+\documentclass[10pt]{article}
+\usepackage[a4paper, tmargin=0.75in, lmargin=0.80in, rmargin=0.80in, bmargin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{dsfont}
+\usepackage{amsfonts}
+\usepackage{ragged2e}
+\usepackage{mathtools}
+\usepackage{enumitem}   
+\usepackage{MnSymbol}%
+\usepackage{wasysym}%
+\usepackage{relsize}%
+\usepackage{xcolor}
+
+\usepackage{amsmath}
+\usepackage{upgreek}
+\usepackage{mathrsfs}
+\usepackage{blindtext}
+\usepackage{listings}
+\usepackage{xcolor}
+
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+    literate={ĉ}{{\^c}}1
+        {Ĉ}{{\^C}}1
+}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\pagestyle{empty}
+\renewcommand\thesubsection{\Alph{subsection}}
+\DeclareMathOperator*{\limop}{\lim}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENTER SOME IMPORTANT INFORMATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\studentname}{Luis Alejandro Rubiano}
+\newcommand{\studentnumber}{202013482}
+\newcommand{\researchcentre}{la.rubiano@uniandes.edu.co}
+\newcommand{\projecttitle}{Convex Optimization}
+\newcommand{\supervisor}{Mauricio Junca}
+\newcommand{\xRightarroww}[2][]{\ext@arrow 0359\Rightarrowfill@{#1}{#2}}
+
+\newcommand\setItemnumber[1]{\setcounter{enum\romannumeral\@enumdepth}{\numexpr#1-1\relax}}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \littletaller % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\newcommand{\littletaller}{\mathchoice{\vphantom{\big|}}{}{}{}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+{\Huge{Exam 2, Convex Optimization}} \\
+\vspace{2mm}
+{\Large{Departamento de Matemáticas, Universidad de los Andes}} \\
+\vspace{1mm}
+{\Large{Colombia}}
+\end{center}
+
+\vspace{5mm}
+\hrule
+\vspace{1mm}
+\hrule
+
+\vspace{3mm}
+\begin{tabular}{ll} 
+Student's name:           	        & {\studentname}   \\ 
+Student's code: 	        & {\studentnumber} \\ 
+Email address: 	        & {\researchcentre}  \\ 
+Class: 	& {\projecttitle}  \\ 
+Instructor: 	    & {\supervisor}  \\ 
+\end{tabular}
+
+\vspace{3mm}
+\hrule
+\vspace{1mm}
+\hrule
+
+\hfill \break %SPACE
+
+\part{}
+
+\section{Ex. 11.13. Foundations of Optimization, Güler.
+\textbf{(von Neumann)} In this problem, the famous 
+\textit{von Neumann minimax theorem} for bimatrix games will be proved 
+using linear programming duality. This result, which von Neumann proved in 
+1928 by advanced methods (Brouwer’s fixed point theorem), was the starting point of game theory.\\
+Let $A$ be an $m \times n$ matrix and denote by $\Delta_{m-1}$ and $\Delta_{n-1}$ the unit simplices, where 
+$$\Delta_{n-1} = \{x \in \mathbb{R}^n: x \geq 0, \sum_{i=1}^{n} x_i = 1\},$$
+and where $\Delta_{m-1}$ is defined similarly. The von Neumann minimax theorem states that
+$$\min_{x \in \Delta_{n-1}} \max_{y \in \Delta_{m-1}} \langle Ax, y \rangle = \max_{y \in \Delta_{m-1}} \min_{x \in \Delta_{n-1}} \langle Ax, y \rangle.$$
+Denote by $a^i$ and $a_j$ the $i$-th row and $j$-th column of $A$, respectively.}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Show that 
+  $$\max_{y \in \Delta_{m-1}} \langle Ax, y \rangle = \max_{1\leq i \leq m} \langle a^i, x \rangle,$$
+  so that 
+  $$\min_{x \in \Delta_{n-1}} \max_{y \in \Delta_{m-1}} \langle Ax, y \rangle = \min_{x \in \Delta_{n-1}} \max_{1\leq i \leq m} \langle a^i, x \rangle.$$
+\end{enumerate}
+
+\paragraph{Proof:}
+
+
+Fix $x \in \Delta_{n-1}$, i.e., $x \geq 0$ and $\sum_{j=1}^n x_j = 1$. For any $y \in \Delta_{m-1}$, we have:
+\[
+\langle A x, y \rangle = \sum_{i=1}^m y_i \langle a^i, x \rangle.
+\]
+Since $y \in \Delta_{m-1}$, it is a convex combination of the vectors $a^i$, so 
+\[
+\langle A x, y \rangle \text{ is a convex combination of } \{\langle a^1, x \rangle, \ldots, \langle a^m, x \rangle\}.
+\]
+Maximizing over all such $y$ places all the weight on the largest $\langle a^i, x \rangle$, thus
+\[
+\max_{y \in \Delta_{m-1}} \langle A x, y \rangle = \max_{1 \leq i \leq m} \langle a^i, x \rangle.
+\]
+Therefore,
+\[
+\min_{x \in \Delta_{n-1}} \max_{y \in \Delta_{m-1}} \langle A x, y \rangle = \min_{x \in \Delta_{n-1}} \max_{1 \leq i \leq m} \langle a^i, x \rangle. \ \square
+\] 
+
+
+
+\begin{enumerate}[label=(\alph*)]
+  \setcounter{enumi}{1}
+  \item Show that the right-hand side of the equation above can be written as a linear program 
+  $$ \min\{ z: \langle a^i, x \rangle \leq z, i = 1, \ldots, m, \sum_{j=1}^{n} x_j = 1, x \geq 0\},$$
+  in the variables $(x, z)$.
+\end{enumerate}
+
+\paragraph{Proof:}
+
+We want to solve 
+\[
+\min_{x \in \Delta_{n-1}} \max_{1 \leq i \leq m} \langle a^i, x \rangle.
+\]
+Introduce a variable $z$ to represent the maximum over $i$, yielding the equivalent problem:
+\[
+\min_{x,z} \{ z : \langle a^i, x \rangle \le z \ \text{for all } i, \ \sum_{j=1}^n x_j = 1, \ x \geq 0\}.
+\]
+This is clearly a linear program in $(x,z)$. $\square$
+
+
+\begin{enumerate}[label=(\alph*)]
+  \setcounter{enumi}{2}
+  \item Show that the dual of the linear program above is 
+  $$\max\{ \delta: \sum_{i=1}^{m} y_i a^i - \delta e \geq 0, \sum_{i=1}^{m} y_i = 1, y \geq 0\},$$
+  in the variables $(y, \delta)$. Here $e \in \mathbb{R}^n$ is the vector with all components $1$. \textit{Hint}:
+  One way to proceed is to write the Lagrangian function 
+  $$L(x,z; y, \delta) = z + \sum_{i=1}^{m} y_i \left( \langle a^i, x \rangle - z \right) + \delta \left(1 - \langle e, x \rangle \right)$$
+  on the set $X \times \Lambda$, where $X = \{x: x \geq 0\}$ and $\Lambda = \{(y, \delta): y \geq 0$\}, and to formulate the dual using $L$. 
+\end{enumerate}
+
+\paragraph{Proof:}
+
+
+Consider the primal LP:
+\[
+\begin{aligned}
+\min \quad & z \\
+\text{subject to } & \langle a^i, x \rangle \le z, \ i=1,\ldots,m,\\
+& \sum_{j=1}^n x_j = 1, \\
+& x \geq 0.
+\end{aligned}
+\]
+
+The Lagrangian for this problem with multipliers $y_i \geq 0$ for $\langle a^i, x \rangle - z \le 0$ and a multiplier $\delta$ for the equality $\sum_j x_j = 1$ is:
+\[
+L(x,z;y,\delta) = z + \sum_{i=1}^m y_i(\langle a^i, x \rangle - z) + \delta(1 - \langle e, x \rangle).
+\]
+
+\[
+ = z(1 - \sum_{i=1}^m y_i) + \sum_{i=1}^m y_i \langle a^i, x \rangle + \delta(1 - \sum_{j=1}^n x_j).
+\]
+
+For $x$-directions, to ensure boundedness, we must have 
+\[
+\sum_{i=1}^m y_i a^i - \delta e \geq 0.
+\]
+For $z$, we need $1 - \sum_{i=1}^m y_i = 0$, i.e., $\sum_{i=1}^m y_i = 1$.
+
+Thus, the dual problem is:
+\[
+\max_{\delta, y} \{\delta : \sum_{i=1}^m y_i a^i - \delta e \geq 0, \ \sum_{i=1}^m y_i = 1, \ y \geq 0 \}. \ \square
+\]
+
+
+
+
+\begin{enumerate}[label=(\alph*)]
+  \setcounter{enumi}{3}
+  \item Using the already encountered techniques in parts (a) and (b), show that the dual linear program is equivalent to the right-hand side of the von Neumann minimax theorem.
+  
+\end{enumerate}
+
+\paragraph{Proof:}
+
+
+From the dual form:
+\[
+\max_{\delta, y} \{\delta : \sum_{i=1}^m y_i a^i - \delta e \geq 0, \ \sum_{i=1}^m y_i = 1, \ y \geq 0 \},
+\]
+the condition $\sum_{i=1}^m y_i a^i - \delta e \geq 0$ implies that for every $x \in \Delta_{n-1}$,
+\[
+\langle \sum_{i=1}^m y_i a^i, x \rangle \geq \delta.
+\]
+Since $\sum_{i=1}^m y_i = 1$, we have $y \in \Delta_{m-1}$. Thus,
+\[
+\min_{x \in \Delta_{n-1}} \langle A x, y \rangle \geq \delta.
+\]
+Maximizing $\delta$ is then equivalent to maximizing 
+\[
+\min_{x \in \Delta_{n-1}} \langle A x, y \rangle
+\]
+over $y \in \Delta_{m-1}$.
+
+Therefore, the dual problem is
+\[
+\max_{y \in \Delta_{m-1}} \min_{x \in \Delta_{n-1}} \langle A x, y \rangle.\ \square
+\]
+
+
+
+
+\hfill \break %SPACE
+
+\section{Ex. 11.15. Foundations of Optimization, Güler. (Teboulle)
+Consider the minimization problem $$\min -\sum_{i=1}^{n} \ln x_i$$
+$$\text{s.t.} \frac{1}{2} \langle Qx, x \rangle + \langle b, x \rangle + c \leq 0,$$
+where $Q$ is an $n \times n$ symmetric positive definite matrix. Assume that the constraint set contains a vector $\bar{x}>0$ such
+that $\frac{1}{2} \langle Q\bar{x}, \bar{x} \rangle + \langle b, \bar{x} \rangle + c<0$. 
+}
+
+\begin{enumerate}[label=(\alph*)] 
+  \item Show that $(P)$ has a minimizer.
+\end{enumerate}
+
+\paragraph{Proof:}
+
+\[
+(P) \quad \min_{x>0} -\sum_{i=1}^{n} \ln(x_i) \quad \text{s.t.} \quad \tfrac{1}{2}\langle Qx,x \rangle + \langle b,x\rangle + c \leq 0.
+\]
+
+Since $-\sum_{i=1}^{n}\ln(x_i)$ is strictly convex and tends to $+\infty$ as any $x_i \to 0^{+}$, it enforces that any minimizing sequence cannot approach the boundary $x_i=0$. Thus, the minimizer cannot lie on the boundary of the positive orthant. The level sets of the objective function are compact in the interior of the positive orthant. Since the feasible set 
+\[
+F = \{x > 0 \mid \tfrac{1}{2}\langle Qx,x\rangle + \langle b,x\rangle + c \leq 0\}
+\]
+contains a strictly feasible point $\bar{x} > 0$ and $Q$ is positive definite, it follows that $F$ is a closed and convex set with a nonempty interior. Since the objective function is continuous and strictly convex, and the feasible set is nonempty, convex, and closed, the problem $(P)$ has a minimizer. $\square$
+
+
+
+
+
+
+\begin{enumerate}[label=(\alph*)]
+  \setcounter{enumi}{1}
+  \item The direct approach to formulating the dual will lead to a problem
+  that is hard to write down explicitly. The following trick will lead to a manageable dual problem.
+  Since $Q$ is positive semidefinite, it has a square root, that is, an 
+  $n \times n$ positive semidefinite matrix $A$ such that $A^2 = Q$. 
+  Introducing the variable $u = Ax$, we can rewrite $(P)$ in the form 
+  $$\min -\sum_{i=1}^{n} \ln x_i$$
+  $$\text{s.t.} \frac{1}{2} \| u \|^2 + \langle b, x \rangle + c \leq 0,$$
+  $$Ax - u = 0.$$
+  Using the standard Lagrangian approach, formulate the dual problem explicitly, that is, as a maximization problem 
+  in which the objective function is given explicitly.
+\end{enumerate}
+
+\paragraph{Proof:}
+
+
+We start from:
+\[
+(P) \quad \min_{x>0} -\sum_{i=1}^n \ln(x_i) \quad \text{s.t.} \quad \tfrac{1}{2}\langle Qx,x\rangle + \langle b,x\rangle + c \le 0.
+\]
+
+Since $Q$ is positive definite, we can factor it as $Q = A^2$ for some $A$ symmetric and positive definite. Define $u = Ax$. Then:
+\[
+\tfrac12\langle Qx,x\rangle = \tfrac12 \|Ax\|^2 = \tfrac12 \|u\|^2.
+\]
+
+Thus, $(P)$ becomes:
+\[
+\min_{x>0,u} -\sum_{i=1}^n \ln(x_i) \quad \text{s.t.} \quad \tfrac12 \|u\|^2 + \langle b,x\rangle + c \le 0, \quad Ax - u = 0.
+\]
+
+Introducing Lagrange multipliers $\lambda \ge 0$ for the inequality constraint and $y \in \mathbb{R}^n$ for the equality constraint $Ax - u=0$ gives the Lagrangian:
+\[
+L(x,u,\lambda,y) = -\sum_{i=1}^n \ln(x_i) + \lambda\bigl(\tfrac12 \|u\|^2 + b^\top x + c\bigr) + y^\top(Ax - u).
+\]
+
+First, minimize w.r.t. $u$:
+\[
+\frac{\partial L}{\partial u} = \lambda u - y = 0 \implies u = \frac{y}{\lambda}.
+\]
+
+Substitute back into $L$:
+\[
+L(x,\lambda,y) = -\sum_{i=1}^n \ln(x_i) + \lambda(b^\top x + c) + y^\top A x + \lambda\left(\tfrac12 \frac{\|y\|^2}{\lambda^2}\right) - y^\top\left(\frac{y}{\lambda}\right).
+\]
+
+Since
+\[
+\tfrac12 \frac{\|y\|^2}{\lambda} - \frac{\|y\|^2}{\lambda} = -\frac{\|y\|^2}{2\lambda}.
+\]
+
+Then
+\[
+L(x,\lambda,y) = -\sum_{i=1}^n \ln(x_i) + \lambda(b^\top x + c) + y^\top A x - \frac{\|y\|^2}{2\lambda}.
+\]
+
+Next, minimize w.r.t. $x$. 
+\[
+\frac{\partial L}{\partial x_i} = -\frac{1}{x_i} + \lambda b_i + (A^\top y)_i = 0 \implies x_i = \frac{1}{\lambda b_i + (A^\top y)_i}.
+\]
+
+Substitute $x_i$ into the Lagrangian:
+\[
+-\sum_{i=1}^n \ln x_i = \sum_{i=1}^n \ln(\lambda b_i + (A^\top y)_i).
+\]
+
+Also:
+\[
+b^\top x = \sum_{i=1}^n \frac{b_i}{\lambda b_i+(A^\top y)_i}, \quad A x = A\left(\frac{1}{\lambda b + A^\top y}\right).
+\]
+
+Thus, the dual function $d(\lambda,y)$ is:
+\[
+d(\lambda,y) = \sum_{i=1}^n \ln(\lambda b_i + (A^\top y)_i) + \lambda\left(c + \sum_{i=1}^n \frac{b_i}{\lambda b_i+(A^\top y)_i}\right) + y^\top A\left(\frac{1}{\lambda b + A^\top y}\right) - \frac{\|y\|^2}{2\lambda}.
+\]
+
+The dual problem is:
+\[
+(D) \quad \max_{\lambda\ge 0,\,y\in\mathbb{R}^n} d(\lambda,y). \ \square
+\]
+
+
+
+\begin{enumerate}[label=(\alph*)]
+  \setcounter{enumi}{2}
+  \item Suppose an optimal solution to the dual problem is somehow found. Use this knowledge to determine the optimal solution
+        $x^* \in \mathbb{R}^n$ to the original problem $(P)$.
+\end{enumerate}
+
+\paragraph{Proof:}
+
+Using the Theorem 11.5, 
+\[
+x_i^* = \frac{1}{\lambda^* b_i + (A^\top y^*)_i}
+\]
+is optimal primal solution $x^*$ in terms of the dual solution.
+
+
+
+\begin{enumerate}[label=(\alph*)]
+  \setcounter{enumi}{3}
+  \item Using the above approach, formulate the dual problem when $(P)$ has more 
+  than one $(k>1)$ convex quadratic inequality.
+\end{enumerate}
+
+\paragraph{Proof:}
+
+
+If we have $k>1$ convex quadratic inequalities:
+\[
+\tfrac12\langle Q_j x,x\rangle + b_j^\top x + c_j \le 0, \quad j=1,\dots,k,
+\]
+we introduce $u_j = A_j x$ where $Q_j = A_j^2$. The constraints become:
+\[
+\tfrac12 \|u_j\|^2 + b_j^\top x + c_j \le 0, \quad A_j x - u_j =0, \quad j=1,\dots,k.
+\]
+
+Introducing $\lambda_j \ge 0$ and $y_j$ for each constraint:
+\[
+L(x,\{u_j\},\{\lambda_j\},\{y_j\}) = -\sum_{i=1}^n \ln(x_i) + \sum_{j=1}^k \lambda_j\bigl(\tfrac12 \|u_j\|^2 + b_j^\top x + c_j\bigr) + \sum_{j=1}^k y_j^\top(A_j x - u_j).
+\]
+
+Following the same steps as the single-constraint case, we get a dual problem in terms of $(\lambda_j,y_j)$ for $j=1,\dots,k$. The structure remains similar, but each constraint contributes an additional pair $(\lambda_j,y_j)$ and corresponding terms in the dual objective. $\square$
+
+
+\part{}
+
+Using the same vectors \( c \) and \( a_j \) from the first homeworks, we want to solve the following linear problem. Recall that there are \( m = 2000 \) constraints with \( \|a_j\| = 1 \), and \( x \) has \( n = 5000 \) dimensions.
+
+\begin{align*}
+  \min \quad & \langle c, x \rangle \\
+  \text{s.t.} \quad & \langle a_j, x \rangle \leq 1 \quad \forall j \\
+  & |x_i| \leq 1 \quad \forall i
+\end{align*}
+
+We will consider three methods to solve this problem. For each method, allocate the same amount of time and report the optimality gap (estimate \( f^* \) as accurately as possible, potentially using an existing solver) and the feasibility gap, i.e., how far the obtained solution is from being a feasible solution. For the first two methods, you must solve the unconstrained minimization problems using one of the following methods:
+
+\begin{enumerate}
+  \item Gradient method with a constant step size.
+  \item Gradient method with backtracking.
+  \item Gradient method with backtracking and one of the Goldstein or Wolfe conditions.
+  \item Newton's method.
+  \item Quasi-Newton BFGS method with backtracking and Wolfe conditions for step size selection.
+  \item Newton's trust-region method and the dogleg method to approximate the solution of the subproblem.
+  \item Nesterov's accelerated gradient method with backtracking.
+  \item Stochastic gradient method with mini-batches.
+\end{enumerate}
+
+The methods are as follows:
+
+\begin{enumerate}
+  \item Choose the ``best'' of the methods mentioned above and use it to solve the linear problem using a barrier-type method. Clearly describe the method: how to update the parameters, stopping criteria, optimality criteria for each subproblem, etc.
+  \item  Choose one of the methods mentioned above to optimize the function 
+  $t \langle c, x \rangle - \sum_{j=1}^m \log(1 - \langle a_j, x \rangle)$
+  and use it to solve the linear problem using a barrier-type method, projecting the solution onto the hypercube \( \{ x : |x_i| \leq 1, \, \forall i \} \) at each iteration. Clearly describe the method: how to update the parameters, stopping criteria, optimality criteria for each subproblem, etc.
+  \end{enumerate}
+
+\paragraph{Solution:}
+
+By making use of \texttt{scipy.optimize.linprog} the estimated optimal value is $f^* = -1224.395052671263$.\\
+
+For the first problem we tried gradient descent with constant step size, gradient descent with backtracking, and Nesterov's accelerated gradient method with backtracking. For the second problem, we used projected gradient with backtracking. The results are shown in the table below. 10 seconds were allocated for each method.\\
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{l l r r r}
+  \hline
+  \textbf{Method} & \textbf{Approach} & \textbf{Final Value} & \textbf{Gap to Optimal} & \textbf{Feasibility Gap} \\
+  \hline
+  Method A & Constant Step & -9.41646706 & 1214.9785 & 0.0 \\
+  Method B & Backtracking & -306.5924290 & 917.802623 & 0.0 \\
+  Method C & Nesterov + Backtracking & -1223.711926 & 0.6831260 & 1.0425014 \\
+  Barrier Method & Projected gradient with backtracking & -375.247409 & 849.14764 & 0.0 \\
+  \hline
+  \end{tabular}
+  \caption{Results for the different methods}
+  \end{table}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import pandas as pd
+import time
+from scipy.optimize import linprog
+
+np.random.seed(3527)
+
+# Problem dimensions
+n = 5000
+m = 2000
+
+df = pd.read_csv('A.txt', header=None)
+A = df.values  
+
+# Generate c between -0.5 and 0.5
+c = np.random.rand(n) - 0.5 
+
+# Estimate f^* using scipy 
+bounds = (-1, 1)
+res = linprog(c, A_ub=A, b_ub=np.ones(m), bounds=[bounds]*n, method='highs')
+f_star = res.fun
+print("Estimated f* =", f_star)
+
+#####################################################
+# Helper functions
+#####################################################
+
+def project_onto_box(x, lower=-1.0, upper=1.0):
+    return np.clip(x, lower, upper)
+
+def feasibility_gap(x, A):
+    # Measures how much constraints are violated:
+    # max(a_j^T x - 1, 0) and max(|x_i|-1,0)
+    Ax = A.dot(x)
+    cons_viol = np.maximum(Ax - 1, 0).sum()
+    box_viol = np.sum(np.maximum(np.abs(x)-1,0))
+    return cons_viol + box_viol
+
+def objective_value(x, c):
+    return np.dot(c, x)
+
+def penalty_function(x, c, A, mu=1000.0):
+    # Unconstrained penalty form:
+    # f(x) = <c,x> + mu/2 * sum_j max(a_j^T x -1, 0)^2 + mu/2 * sum_i max(|x_i|-1,0)^2
+    Ax = A.dot(x)
+    viol_linear = np.maximum(Ax-1,0)
+    viol_box = np.maximum(np.abs(x)-1,0)
+    return np.dot(c, x) + (mu/2.0)*(np.sum(viol_linear**2) + np.sum(viol_box**2))
+
+def penalty_gradient(x, c, A, mu=1000.0):
+    # Gradient of penalty_function
+    Ax = A.dot(x)
+    viol_linear = Ax - 1
+    mask_linear = (viol_linear > 0)
+    grad_linear = A[mask_linear,:].T.dot(viol_linear[mask_linear])  # sum over violating constraints
+    
+    diff_x = np.abs(x)-1
+    mask_box_pos = (x > 1)
+    mask_box_neg = (x < -1)
+    # gradient w.r.t. box constraints
+    # d/dx_i (max(|x_i|-1,0)^2) = 2(|x_i|-1)*sign(x_i) if violated
+    grad_box = np.zeros_like(x)
+    grad_box[mask_box_pos] = mu*(x[mask_box_pos]-1)
+    grad_box[mask_box_neg] = mu*(x[mask_box_neg]+1)
+    
+    return c + mu*grad_linear + grad_box
+
+def report_solution(x, f_star, A, c):
+    obj = objective_value(x, c)
+    opt_gap = obj - f_star
+    feas_gap = feasibility_gap(x, A)
+    return obj, opt_gap, feas_gap
+
+#####################################################
+# 1. Three methods for the linear problem
+#####################################################
+
+# We implement each method to run for a fixed amount of time and then report results.
+
+def gradient_constant_step(x0, c, A, mu=1000.0, step=1e-5, max_time=10.0):
+    x = x0.copy()
+    start = time.time()
+    while time.time() - start < max_time:
+        grad = penalty_gradient(x, c, A, mu)
+        x -= step*grad
+    return x
+
+def gradient_backtracking(x0, c, A, mu=1000.0, alpha_init=1e-3, beta=0.5, gamma=1e-4, max_time=10.0):
+    x = x0.copy()
+    start = time.time()
+    while time.time() - start < max_time:
+        grad = penalty_gradient(x, c, A, mu)
+        fx = penalty_function(x, c, A, mu)
+        step = alpha_init
+        # Backtracking line search
+        while True:
+            x_new = x - step*grad
+            f_new = penalty_function(x_new, c, A, mu)
+            if f_new <= fx - gamma*step*np.dot(grad, grad):
+                break
+            step *= beta
+            if step < 1e-20:
+                break
+        x = x_new
+    return x
+
+def nesterov_accelerated_backtracking(x0, c, A, mu=1000.0, alpha_init=1e-3, beta=0.5, gamma=1e-4, max_time=10.0):
+    x = x0.copy()
+    y = x0.copy()
+    t_old = 1.0
+    start = time.time()
+    while time.time() - start < max_time:
+        grad = penalty_gradient(y, c, A, mu)
+        fy = penalty_function(y, c, A, mu)
+        step = alpha_init
+        # Backtracking line search
+        while True:
+            x_new = y - step*grad
+            f_new = penalty_function(x_new, c, A, mu)
+            if f_new <= fy - gamma*step*np.dot(grad, grad):
+                break
+            step *= beta
+            if step < 1e-20:
+                break
+        x_prev = x
+        x = x_new
+        t_new = (1 + np.sqrt(1+4*t_old*t_old))/2
+        y = x + (t_old-1)/t_new * (x - x_prev)
+        t_old = t_new
+    return x
+
+# Run and compare
+x0 = np.zeros(n)
+time_budget = 10.0
+
+x_const = gradient_constant_step(x0, c, A, mu=1000.0, step=1e-5, max_time=time_budget)
+x_back = gradient_backtracking(x0, c, A, mu=1000.0, alpha_init=1e-3, max_time=time_budget)
+x_nest = nesterov_accelerated_backtracking(x0, c, A, mu=1000.0, alpha_init=1e-3, max_time=time_budget)
+
+print("Method A (Constant Step) Results:", report_solution(x_const, f_star, A, c))
+print("Method B (Backtracking) Results:", report_solution(x_back, f_star, A, c))
+print("Method C (Nesterov + Backtracking) Results:", report_solution(x_nest, f_star, A, c))
+
+#####################################################
+# 2. Barrier-type method
+#####################################################
+
+# Solve:
+# min t <c,x> - sum_j log(1 - a_j^T x)
+# subject to |x_i| <= 1
+#
+# We'll use gradient method with backtracking and projection to solve subproblems.
+# Increase t iteratively.
+# Stop when difference from f_star is small or feasibility gap is small.
+
+def barrier_objective(x, c, A, t):
+    Ax = A.dot(x)
+    # If outside domain, return infinity
+    if np.any(Ax >= 1):
+        return np.inf
+    return t*np.dot(c, x) - np.sum(np.log(1 - Ax))
+
+def barrier_gradient(x, c, A, t):
+    Ax = A.dot(x)
+    denom = 1 - Ax
+    # If outside domain, gradient is not defined properly
+    if np.any(denom <= 0):
+        return np.full_like(x, np.inf)
+    grad = t*c + np.sum(A.T/(denom), axis=1)
+    return grad
+
+def solve_barrier_subproblem(x0, c, A, t, alpha_init=1e-3, beta=0.5, gamma=1e-4, max_iter=500, tol=1e-6):
+    x = x0.copy()
+    for _ in range(max_iter):
+        grad = barrier_gradient(x, c, A, t)
+
+        # If gradient is infinite, we are outside domain break 
+        if np.any(np.isinf(grad)):
+            break
+
+        gnorm = np.linalg.norm(grad)
+        if gnorm < tol:
+            break
+
+        fx = barrier_objective(x, c, A, t)
+        step = alpha_init
+
+        # Add a maximum number of backtracking attempts
+        max_backtracking = 50
+        backtrack_count = 0
+        success = False
+
+        while backtrack_count < max_backtracking:
+            x_new = project_onto_box(x - step*grad)
+            f_new = barrier_objective(x_new, c, A, t)
+
+            if f_new == np.inf:
+                step *= beta
+                backtrack_count += 1
+                continue
+
+            # Armijo condition
+            if f_new <= fx - gamma * step * np.dot(grad, grad):
+                success = True
+                x = x_new
+                break
+
+            step *= beta
+            backtrack_count += 1
+
+        if not success:
+            break
+
+    return x
+
+def barrier_method(c, A, x0=None, t0=1.0, mu=10.0, outer_max_iter=10, inner_tol=1e-6):
+    if x0 is None:
+        x0 = np.zeros_like(c)
+    x = x0.copy()
+    for k in range(outer_max_iter):
+        x = solve_barrier_subproblem(x, c, A, t0, max_iter=1000, tol=inner_tol)
+        obj = np.dot(c, x)
+        feas = np.sum(np.maximum(A.dot(x)-1,0)) + np.sum(np.maximum(np.abs(x)-1,0))
+        if feas < 1e-6:
+            break
+        t0 *= mu
+    return x
+
+# Run and compare
+x_barrier = barrier_method(c, A, t0=1.0, mu=10.0, outer_max_iter=10, inner_tol=1e-6)
+print("Barrier Method Results:", report_solution(x_barrier, f_star, A, c))
+\end{lstlisting}
+
+
+
+
+  
+\end{document}

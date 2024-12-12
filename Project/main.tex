@@ -1,0 +1,523 @@
+
+\documentclass[10pt]{article}
+\usepackage[a4paper, tmargin=0.75in, lmargin=0.80in, rmargin=0.80in, bmargin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{dsfont}
+\usepackage{amsfonts}
+\usepackage{ragged2e}
+\usepackage{mathtools}
+\usepackage{enumitem}   
+\usepackage{MnSymbol}%
+\usepackage{wasysym}%
+\usepackage{relsize}%
+\usepackage{xcolor}
+
+\usepackage{amsmath}
+\usepackage{upgreek}
+\usepackage{mathrsfs}
+\usepackage{blindtext}
+\usepackage{listings}
+\usepackage{xcolor}
+
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+    literate={ĉ}{{\^c}}1
+        {Ĉ}{{\^C}}1
+}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\pagestyle{empty}
+\renewcommand\thesubsection{\Alph{subsection}}
+\DeclareMathOperator*{\limop}{\lim}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENTER SOME IMPORTANT INFORMATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\studentname}{Luis Alejandro Rubiano}
+\newcommand{\studentnumber}{202013482}
+\newcommand{\researchcentre}{la.rubiano@uniandes.edu.co}
+\newcommand{\projecttitle}{Convex Optimization}
+\newcommand{\supervisor}{Mauricio Junca}
+\newcommand{\xRightarroww}[2][]{\ext@arrow 0359\Rightarrowfill@{#1}{#2}}
+
+\newcommand\setItemnumber[1]{\setcounter{enum\romannumeral\@enumdepth}{\numexpr#1-1\relax}}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \littletaller % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\newcommand{\littletaller}{\mathchoice{\vphantom{\big|}}{}{}{}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+{\Huge{Final project, Convex Optimization: Cost-effective dietary planning using the simplex method}} \\
+\vspace{2mm}
+{\Large{Departamento de Matemáticas, Universidad de los Andes}} \\
+\vspace{1mm}
+{\Large{Colombia}}
+\end{center}
+
+\vspace{5mm}
+\hrule
+\vspace{1mm}
+\hrule
+
+\vspace{3mm}
+\begin{tabular}{ll} 
+Student's name:           	        & {\studentname}   \\ 
+Student's code: 	        & {\studentnumber} \\ 
+Email address: 	        & {\researchcentre}  \\ 
+Class: 	& {\projecttitle}  \\ 
+Instructor: 	    & {\supervisor}  \\ 
+\end{tabular}
+
+\vspace{3mm}
+\hrule
+\vspace{1mm}
+\hrule
+
+\hfill \break %SPACE
+
+\section{Abstract}
+
+This project applies the simplex method to optimize daily food consumption by minimizing cost while satisfying a set of nutritional constraints. Using a dataset of food items with detailed nutritional values and prices, a linear programming model was formulated. The objective was to minimize the total cost of the daily diet, subject to constraints on calorie intake, protein, fat, carbohydrates, fiber, sugar, and sodium.\\
+
+The simplex algorithm was employed to efficiently navigate the vertices of the feasible polytope, leveraging the convex structure of the problem to guarantee an optimal solution. Python's \texttt{scipy.optimize.linprog} library was used to solve the linear programming problem.\\
+
+The results showed that the optimal diet for a 22-year-old male weighing 82 kg and standing 1.85 m tall would cost 11,345 Colombian pesos per day and would consist of a variety of 12 different food items. This project demonstrates the efficacy of convex optimization, particularly linear programming, in addressing real-world problems. Future work could involve extending the model to include additional constraints, such as dietary preferences or allergies.\\
+
+\section{Introduction}
+
+\subsection{Background}
+
+The importance of a balanced diet in maintaining good health is well-documented $^1$. A diet that provides the necessary macronutrients in the right proportions is essential for overall well-being. However, planning a diet that meets these requirements can be challenging, especially when considering factors such as cost, specially 
+in developing countries such as Colombia where approximately 1/2 of the working population earns less than 1 minimum wage $^2$, which is around 1,300,000 Colombian pesos or 300 USD. Optimizing food choices to meet nutritional requirements while minimizing costs is a problem with significant practical implications.\\
+
+Linear programming, a fundamental tool in operations research and optimization, has long been used to solve problems involving resource allocation under constraints. The simplex method, introduced by George Dantzig in 1947, is a widely applied algorithm for solving linear programming problems. Its geometric interpretation of moving along the vertices of the feasible region ensures computational efficiency and guarantees optimality for problems with convex feasible spaces.\\
+
+This project uses convex optimization techniques to explore cost-efficient dietary planning under nutritional constraints, demonstrating the relevance of optimization in addressing real-world problems.
+
+
+\subsection{Objective}
+
+The objective of this project is to minimize the total cost of daily food consumption while ensuring that all essential nutritional requirements are met. This involves developing a linear programming model to determine an optimal combination of food items and their quantities. The problem is solved using the simplex method, implemented with Python’s \texttt{scipy.optimize.linprog} library.\\
+
+The project aims to demonstrate how theoretical concepts in linear and convex optimization can be applied to practical dietary planning problems, offering solutions that are both cost-efficient and nutritionally balanced.
+
+
+\subsection{Scope}
+
+This study uses a dataset of food items that includes detailed nutritional profiles and prices. The optimization model incorporates constraints for caloric intake, macronutrient ranges (protein, fat, carbohydrates), and micronutrient limits (sodium, fiber, sugar, and saturated fat). Each food item's contribution is bounded to ensure non-negative quantities, with an upper limit set at 100 grams per item 
+to ensure variety in the diet.\\
+
+The methodology focuses on applying the simplex method to solve this linear programming problem. While the project addresses fixed food prices and predefined nutritional constraints, potential extensions include dynamic pricing, additional dietary preferences, and constraints related to allergies or intolerances.
+
+\subsection{Relevance}
+
+The findings of this project may have significant implications for various sectors. For individuals and households, the results provide a framework for dietary planning constrained to a specific budget. Institutions, such as schools or healthcare facilities, can use similar models to design cost-effective meal plans that meet specific dietary guidelines. Moreover, the application of optimization principles highlights the practical utility of theoretical concepts such as duality and convexity.\\
+
+This work may be extended in future studies, that may include multi-day meal planning or incorporating dynamic pricing. By demonstrating the practicality of linear programming, this study closes the gap between theoretical optimization and its applications in daily life.
+
+\section{Theoretical Framework}
+
+\subsection{Convex Optimization background}
+
+Weierstrass theorem states that if a function $f: K \rightarrow \mathbb{R}$ is continuous and $K$ is compact, then there exist a point $x^* \in K$ such that $f(x^*) \leq f(x)$ for all $x \in K$. This theorem is the basis for the existence of optimal solutions in convex optimization problems.\\
+
+Convex optimization is a powerful framework used to attack a wide range of optimization problems where both the objective function and the constraints exhibit convex properties. Its importance lies in the fact that convex problems guarantee global optimality and there are efficient algorithms to solve them. This project relies on the convex structure of linear programming to model and solve the dietary optimization problem effectively.\\
+
+A subset $C \subseteq \mathbb{R}^n$ is a convex set if for any $x, y \in C$ the line segment $[x,y] \in C$, that is, for any $\alpha \in [0,1]$, $\alpha x + (1-\alpha)y \in C$. Some examples of convex sets are line segments, semispaces, balls, the set of positive semidefinite matrices, and cones.\\
+
+A function $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is a convex function if for any $x, y \in \mathbb{R}^n$ and $\alpha \in [0,1]$, $f(\alpha x + (1-\alpha)y) \leq \alpha f(x) + (1-\alpha)f(y)$. Convex functions have the property that any local minimum is a global minimum. Some examples of convex functions are linear functions, positive combination of convex functions, and level sets of convex functions.\\
+
+In linear programming, the feasible region is defined by a set of linear constraints, forming a convex polytope. The convexity of this polytope guarantees that any convex combination of points within the feasible region also lies within the region.\\
+
+
+\subsection{Linear Programming}
+
+
+Linear programming (LP) is a mathematical framework for optimizing a linear objective function subject to linear equality and inequality constraints. It lies at the intersection of geometry and optimization, using the convex structure of the feasible region to guarantee global optimality.\\
+
+The feasible region in an LP problem is a convex polytope, defined as the intersection of a finite number of half-spaces. Each half-space corresponds to a linear inequality constraint, and their intersection forms a bounded or unbounded convex region. Convex polytopes have a rich geometric structure characterized by vertices and edges. The global optimum of a linear programming problem, if it exists, is always attained at one of the vertices of the polytope.\\
+
+This geometric property underpins the efficiency of algorithms like the simplex method, which traverses the vertices of the polytope in search of the optimal solution. By exploiting the convexity of the feasible region, these algorithms avoid exploring the entire space, instead focusing on critical boundary points.\\
+
+The standard form of a linear programming problem is expressed as:
+\[
+\begin{aligned}
+\text{Minimize } & \ c^T x \\
+\text{subject to } & \ A x \geq b, \\
+& \ x \geq 0,
+\end{aligned}
+\]
+where:
+\begin{itemize}
+    \item $x \in \mathbb{R}^n$ is the vector of decision variables,
+    \item $c \in \mathbb{R}^n$ is the cost vector,
+    \item $A \in \mathbb{R}^{m \times n}$ is the constraint matrix,
+    \item $b \in \mathbb{R}^m$ is the constraint bound vector.
+\end{itemize}
+
+This formulation assumes equality constraints and non-negativity bounds on the decision variables. \\
+
+A fundamental concept in linear programming is duality, which associates every primal problem with a corresponding dual problem. The primal problem seeks to minimize the objective function, while the dual problem seeks to maximize a related objective function under complementary constraints. The dual problem for the standard form is:
+\[
+\begin{aligned}
+\text{Maximize } & \ b^T y \\
+\text{subject to } & \ A^T y \leq c, \\
+& \ y \geq 0,
+\end{aligned}
+\]
+where $y \in \mathbb{R}^m$ represents the dual variables.\\
+
+The duality theorem states that if an optimal solution exists for the primal problem, then an optimal solution also exists for the dual problem, and their objective values are equal. This relationship offers an economic interpretation of constraints and variables.\\
+
+Linear programming has diverse applications in fields such as logistics, finance, engineering, and data science. Its geometric and duality-based principles not only ensure computational efficiency but also provide a robust framework for understanding and solving real-world optimization problems.
+
+
+\subsection{Simplex Method}
+
+The simplex method is an algorithmic approach to solving linear programming problems by iteratively improving the solution along the edges of the feasible polytope. Developed by George Dantzig in 1947, it is one of the most widely used methods for LP problems.\\
+
+We now give a very basic overview of the simplex method:\\
+
+The simplex method operates on a tableau, a matrix representation of the LP problem that includes the objective function, constraints, and slack variables. The tableau is updated iteratively to move from one basic feasible solution to another, improving the objective function value at each step. \\
+
+The basic variables are the variables corresponding to the pivot columns in the current tableau, which define the current solution. Geometrically, they correspond to the coordinates of a vertex of the feasible polytope. A feasible solution can have at most \( m \) basic variables (where \( m \) is the number of constraints in the LP problem), and these are the only variables with non-zero values in a basic feasible solution.
+The non-basic variables are the remaining variables not included in the basic solution. They are set to zero in the current solution and represent directions in which the solution can potentially be improved.\\
+
+The reduced cost of a non-basic variable reflects its potential to improve the objective function value if it is increased from zero while keeping all other constraints satisfied.\\
+
+
+The algorithm consists of four main steps:
+
+\begin{enumerate}
+    \item Initialization: Convert the LP problem into standard form by introducing slack variables to transform inequalities into equalities. Identify an initial basic feasible solution.
+    \item Optimality Check: Evaluate the current solution using the objective function coefficients. If all reduced costs (marginal impacts of non-basic variables) are non-negative, the current solution is optimal.
+    \item Pivot Selection: Choose an entering variable (one with the most negative reduced cost) to improve the objective function and a leaving variable to maintain feasibility, based on the minimum ratio test.
+    \item Update: Perform Gaussian elimination to update the tableau and obtain a new basic feasible solution. Repeat the optimality check.
+\end{enumerate}
+
+
+The simplex method guarantees that the solution improves or remains constant at every iteration, and it terminates at an optimal solution. While the worst-case complexity is exponential, the simplex method performs efficiently in practice for most LP problems.\\
+
+The algorithm traverses the vertices of the feasible polytope, moving along its edges. Each pivot corresponds to transitioning from one vertex to another, improving the objective value. This edge-following behavior ensures the method exploits the convex structure of the feasible region.\\
+
+
+\section{Problem Formulation and Implementation}
+
+\subsection{Dataset Description}
+
+The dataset used in this project is \textit{Nutritional values for common foods and products}$^3$. It contains information on the nutritional values of around 8800 food items, including calories, macronutrients (protein, fat, carbohydrates), fiber, sugar, and sodium content. 
+We manually selected 62 popular food items from this dataset to create a smaller subset for the optimization problem. The selected items include fruits, vegetables, dairy products, meats and grains. Each food item is associated with a price in Colombian Pesos per 100 grams which was 
+manually matched using the \textit{Exito} supermarket website$^4$ and \textit{solofruver}$^5$. \\
+
+\subsection{Mathematical Formulation}
+
+
+To minimize the cost of a meal plan while satisfying dietary constraints, we formulate the problem as a linear programming problem.\\
+
+The objective is to minimize the total cost:
+\[
+\text{Minimize: } \mathbf{p}^T \mathbf{x},
+\]
+where:
+\begin{itemize}
+    \item \( \mathbf{x} = [x_1, x_2, \ldots, x_n]^T \) represents the proportion of each food item in the meal plan, measured in 100-gram units,
+    \item \( \mathbf{p} = [p_1, p_2, \ldots, p_n]^T \) is the vector of prices per unit for each food item, measured in Colombian Pesos.
+\end{itemize}
+
+The nutritional constraints ensure that the meal plan meets dietary requirements. They are all measured in grams.\\
+
+Caloric intake:
+\[
+c_{\text{min}} \leq \sum_{i=1}^n c_i x_i \leq c_{\text{max}},
+\]
+
+Protein:
+\[
+p_{\text{min}} \leq \sum_{i=1}^n p_i x_i \leq p_{\text{max}},
+\]
+
+Fat:
+\[
+f_{\text{min}} \leq \sum_{i=1}^n f_i x_i \leq f_{\text{max}},
+\]
+
+Where \( c_i, p_i, f_i\) are the calories, protein and fat content per 100 grams of food item \( i \), respectively. Constraints for saturated fats, carbohydrates, fiber, sugar, and sodium are similarly defined.\\
+
+In matrix form, the nutritional constraints can be written as:
+\[
+Ax \leq b,
+\]
+where:
+\begin{itemize}
+    \item A is the matrix of nutrient content per unit for each food item (rows represent calories, protein, etc.),
+    \item b is the vector of upper and lower bounds for each nutrient.
+\end{itemize}
+
+Non-negativity and limits on the proportion of each food item. The limit is set to 100 grams per item to ensure variety in the diet:
+\[
+0 \leq x_i \leq 1 \quad \forall i = 1, 2, \ldots, n.
+\]
+
+Combining all constraints, the linear programming problem can be expressed as:
+\[
+\text{Minimize: } \mathbf{p}^T \mathbf{x},
+\]
+\[
+\text{Subject to: }
+\begin{cases}
+    \mathbf{A} \mathbf{x} \leq \mathbf{b}, \\
+    0 \leq x_i \leq 1 \quad \forall i.
+\end{cases}
+\]
+
+
+\subsection{Implementation}
+
+We now present the Python code to solve the linear programming problem using the simplex method. The \texttt{scipy.optimize.linprog} library is used to solve the simplex problem. The code reads the dataset, defines the nutritional constraints, and formulates the linear programming problem. The resulting optimal solution provides the quantities of each food item to include in the meal plan, along with the total cost and nutritional values.\\
+
+The values for the nutritional constraints were set based on general dietary guidelines, specific to a 22-year-old male weighing 82 kg and standing 1.85 m tall. The constraints were chosen to reflect a balanced diet while allowing for some flexibility in the nutrient ranges.
+These values can be adjusted to suit different dietary requirements or preferences.\\
+
+\begin{lstlisting}[language=Python, caption=Python code to solve the linear programming problem]
+import pandas as pd
+from scipy.optimize import linprog
+
+# Load data
+file_path = "nutrition_filtered_grams_prices.csv"
+data = pd.read_csv(file_path)
+if data.isnull().any().any():
+    #Change missing values to 0
+    data.fillna(0, inplace=True)
+names = data['name'].values
+calories = data['calories'].values
+protein = data['protein'].values
+total_fat = data['total_fat'].values
+saturated_fat = data['saturated_fat'].values
+carbs = data['carbohydrate'].values
+fiber = data['fiber'].values
+sugar = data['sugars'].values
+sodium = data['sodium'].values
+prices = data['price'].values
+
+# Nutrient constraints
+c_min, c_max = 2200, 2400
+p_min, p_max = 140, 150
+f_min, f_max = 60, 70
+sf_min, sf_max = 0, 25
+ca_min, ca_max = 240, 300
+fi_min, fi_max = 25, 35
+su_min, su_max = 0, 50
+so_min, so_max = 1, 2.3
+
+# Number of products
+n = len(names)
+
+# Define the linear programming problem
+# Objective function: minimize total price (prices^T * x)
+
+# Inequality constraints (Ax <= b)
+A = [
+    calories,           
+    -calories,          
+    protein,            
+    -protein,          
+    total_fat,          
+    -total_fat,         
+    saturated_fat,      
+    -saturated_fat,     
+    carbs,              
+    -carbs,             
+    fiber,              
+    -fiber,             
+    sugar,              
+    -sugar,             
+    sodium,             
+    -sodium             
+]
+b = [
+    c_max, -c_min,      
+    p_max, -p_min,      
+    f_max, -f_min,     
+    sf_max, -sf_min,    
+    ca_max, -ca_min,    
+    fi_max, -fi_min,    
+    su_max, -su_min,    
+    so_max, -so_min     
+]
+
+# Bounds for variables 
+x_bounds = [(0, 1) for _ in range(n)]  # Non-negative quantities, at most 100 grams of each product
+
+# Solve the linear programming problem
+result = linprog(prices, A_ub=A, b_ub=b, bounds=x_bounds, method='simplex')
+
+# Check the result
+if result.success:
+    print("Optimal solution found")
+    solution = result.x
+    total_cost = result.fun
+    selected_items = {names[i]: (solution[i], prices[i]) for i in range(n) if solution[i] > 0}
+    print("Selected items:")
+    for name, (quantity, price) in selected_items.items():
+        print(f"{name}: {quantity*100:.2f} grams, price: {price*quantity:.2f}")
+    print(f"Total cost: {total_cost:.2f}")
+    print("Nutritional values of the selected items:")
+    total_calories = sum(calories[i] * solution[i] for i in range(len(solution)))
+    total_protein = sum(protein[i] * solution[i] for i in range(len(solution)))
+    total_fat = sum(total_fat[i] * solution[i] for i in range(len(solution)))
+    total_saturated_fat = sum(saturated_fat[i] * solution[i] for i in range(len(solution)))
+    total_carbs = sum(carbs[i] * solution[i] for i in range(len(solution)))
+    total_fiber = sum(fiber[i] * solution[i] for i in range(len(solution)))
+    total_sugar = sum(sugar[i] * solution[i] for i in range(len(solution)))
+    total_sodium = sum(sodium[i] * solution[i] for i in range(len(solution)))
+    print(f"Total calories: {total_calories:.2f}")
+    print(f"Total protein: {total_protein:.2f}")
+    print(f"Total fat: {total_fat:.2f}")
+    print(f"Total saturated fat: {total_saturated_fat:.2f}")
+    print(f"Total carbs: {total_carbs:.2f}")
+    print(f"Total fiber: {total_fiber:.2f}")
+    print(f"Total sugar: {total_sugar:.2f}")
+    print(f"Total sodium: {total_sodium:.2f}")
+else:
+    print("No feasible solution found.")
+\end{lstlisting}
+
+\section{Results and Analysis}
+
+The optimal diet for the specified nutritional constraints and food prices was found to consist of 12 different food items. The total cost of this diet was 11,345 Colombian Pesos per day. The selected items and their quantities are shown below:
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Food Item} & \textbf{Quantity (grams)} & \textbf{Price (COP)} \\ \hline
+    Chicken breast tenders, uncooked, breaded & 100.00 & 1900.00 \\ \hline
+    Fish, raw, yellowfin, fresh, tuna & 63.26 & 2530.46 \\ \hline
+    Eggs & 100.00 & 764.00 \\ \hline
+    Beef, raw, 95\% lean meat / 5\% fat, ground & 100.00 & 2300.00 \\ \hline
+    Pork, raw or unheated, breakfast strips, cured & 51.95 & 779.20 \\ \hline
+    Chickpeas (garbanzo beans, Bengal gram), raw, mature seeds & 100.00 & 700.00 \\ \hline
+    Lentils, raw, sprouted & 100.00 & 600.00 \\ \hline
+    Rice, unenriched, raw, short-grain, white & 57.15 & 171.44 \\ \hline
+    Oats & 100.00 & 600.00 \\ \hline
+    Bread, oat bran & 22.22 & 200.00 \\ \hline
+    Pasta, dry, remaining unenriched semolina, 51\% whole wheat, whole grain & 100.00 & 600.00 \\ \hline
+    Milk, without added vitamin A and vitamin D, 1\% fat, fluid & 100.00 & 200.00 \\ \hline
+    \end{tabular}
+    \caption{Optimized Meal Plan: Selected Items, Quantities, and Prices}
+    \label{tab:meal_plan_results_corrected}
+    \end{table}
+    
+    \begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|c|}
+    \hline
+    \textbf{Nutritional Metric} & \textbf{Total Value} \\ \hline
+    Total cost (COP) & 11345.10 \\ \hline
+    Total calories (kcal) & 2359.54 \\ \hline
+    Total protein (g) & 140.00 \\ \hline
+    Total fat (g) & 70.00 \\ \hline
+    Total saturated fat (g) & 18.79 \\ \hline
+    Total carbohydrates (g) & 300.00 \\ \hline
+    Total fiber (g) & 35.00 \\ \hline
+    Total sugar (g) & 21.68 \\ \hline
+    Total sodium (g) & 1.44 \\ \hline
+    \end{tabular}
+    \caption{Nutritional Values of the Selected Meal Plan}
+    \label{tab:meal_plan_nutrition_corrected}
+    \end{table}
+
+The optimal diet meets all nutritional constraints while minimizing costs. The inclusion of a variety of food items ensures a balanced diet that satisfies the specified dietary requirements. The total cost of 11,345 Colombian Pesos per day reflects the cost-effectiveness of the meal plan.\\
+
+\section{Conclusions}
+
+The results of this dietary optimization project demonstrate the practical utility of linear programming for cost-effective nutritional planning. 
+The optimal diet minimizes costs at 11,345 Colombian Pesos per day while meeting all predefined nutritional constraints, including caloric intake, macronutrients 
+(protein, fat, carbohydrates), and micronutrients (fiber, sugar, sodium, etc.). The inclusion of 12 different food items ensures variety and nutritional adequacy, reflecting 
+the model's ability to balance cost efficiency and dietary requirements. However, the solution reveals practical challenges, such as the unfeasibility of consuming chicken, fish,
+ beef, pork, and eggs all in a single day. This limitation suggests that the current model might be more suitable for multiday meal planning, where the consumption of diverse items can
+  be distributed over several days to maintain practicality. The flexibility of the constraints allows the model to be adapted to specific dietary preferences, health conditions, or
+   institutional requirements, offering significant potential for broader applications. Despite its efficiency in solving the problem with multiple variables and constraints, the model does
+    not address real-world factors like dynamic food prices or availability, which could be explored in future iterations. Overall, the project highlights the power of convex optimization, 
+    particularly the simplex method, in solving real-world problems, with potential applications for households, schools, healthcare facilities, and aid organizations looking to optimize meal plans
+     within budgetary constraints.
+
+\section{Future Work}
+
+Future work could expand the scope of the dietary optimization model by incorporating dynamic elements such as fluctuating food prices,
+ seasonal availability, and regional dietary habits. Additionally, integrating multi-day meal planning could enhance practicality by distributing the 
+ consumption of diverse food items across several days. Exploring personalized dietary constraints such as food allergies, cultural preferences, or specific health
+  conditions could make the model adaptable to individual needs. Advanced implementations might include other techniques to predict dietary trends or integrate
+   real-time nutritional data. The model could also be extended to address sustainability concerns by incorporating environmental impact metrics or food waste reduction strategies. 
+
+\section{References}
+
+\begin{enumerate}
+    \item World Health Organization. \textit{Healthy diet}. Retrieved from \url{https://www.who.int/news-room/fact-sheets/detail/healthy-diet}
+    
+    \item Dirección de Impuestos y Aduanas Nacionales (DIAN). \textit{Estadísticas de ingreso y riqueza en clave de género: PLURAL}. Retrieved from \url{https://www.dian.gov.co/dian/cifras/Informesespeciales/02-Estadisticas-de-Ingreso-y-Riqueza-en-Clave-de-Genero-PLURAL.pdf}
+    
+    \item Trolukovich. \textit{Nutritional values for common foods and products} [Data set]. Kaggle. Retrieved from \url{https://www.kaggle.com/datasets/trolukovich/nutritional-values-for-common-foods-and-products}
+    
+    \item Éxito. Retrieved from \url{https://www.exito.com}
+    
+    \item Solofruver. Retrieved from \url{https://solofruver.com}
+    
+    \item Junca, Mauricio. 2024. \textit{Optimización convexa}. Unpublished manuscript.
+        
+    \item Cornell University. \textit{Simplex algorithm}. Optimization Wiki. Retrieved from \url{https://optimization.cbe.cornell.edu/index.php?title=Simplex_algorithm}
+\end{enumerate}
+
+\end{document}
